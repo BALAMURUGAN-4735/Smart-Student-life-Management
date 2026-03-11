@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EduPulse — Smart Student Life Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- AMBIENT -->
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden">
+  <div class="orb" style="width:600px;height:600px;background:radial-gradient(circle,rgba(6,182,212,.06),transparent 70%);top:-150px;right:5%;animation-duration:9s"></div>
+  <div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(167,139,250,.06),transparent 70%);bottom:-100px;left:10%;animation-duration:12s;animation-delay:3s"></div>
+  <div class="orb" style="width:350px;height:350px;background:radial-gradient(circle,rgba(245,158,11,.04),transparent 70%);top:40%;left:40%;animation-duration:14s;animation-delay:6s"></div>
+</div>
+
+<!-- ═══ AUTH ═══ -->
+<div id="s-auth" class="screen active">
+<div class="auth-bg">
+  <div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(6,182,212,.15),transparent 70%);top:-80px;left:15%"></div>
+  <div class="orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(167,139,250,.15),transparent 70%);bottom:5%;right:10%;animation-duration:8s;animation-delay:2s"></div>
+  <div class="g2" style="padding:40px;width:400px;max-width:92vw;position:relative;z-index:1">
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="font-size:52px;margin-bottom:4px;filter:drop-shadow(0 0 20px var(--c))">⚡</div>
+      <h1 style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;letter-spacing:-1px;margin:0">EduPulse</h1>
+      <p style="color:rgba(255,255,255,.45);font-size:13px;margin:5px 0 0">Smart Student Life Manager</p>
+    </div>
+    <div style="display:flex;background:rgba(0,0,0,.35);border-radius:10px;padding:4px;margin-bottom:24px">
+      <button id="tab-l" onclick="authTab('l')" class="btn" style="flex:1;border-radius:8px;padding:9px;background:linear-gradient(135deg,var(--c),var(--p));color:#fff">Login</button>
+      <button id="tab-s" onclick="authTab('s')" class="btn" style="flex:1;border-radius:8px;padding:9px;background:transparent;color:rgba(255,255,255,.45)">Sign Up</button>
+    </div>
+    <div id="form-l">
+      <div style="margin-bottom:12px"><input class="inp" id="l-u" placeholder="Username or Email" autocomplete="username"></div>
+      <div style="margin-bottom:12px"><input class="inp" type="password" id="l-p" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div id="a-err" class="al al-e" style="display:none"></div>
+      <div id="a-ok" class="al al-ok" style="display:none">✅ Login successful! Setting up your profile...</div>
+      <button class="btn bp bbl blg" onclick="doLogin()" style="margin-top:6px">Login →</button>
+    </div>
+    <div id="form-s" style="display:none">
+      <div style="margin-bottom:12px"><input class="inp" id="s-n" placeholder="Full Name"></div>
+      <div style="margin-bottom:12px"><input class="inp" id="s-u" placeholder="Username"></div>
+      <div style="margin-bottom:12px"><input class="inp" type="email" id="s-e" placeholder="Email Address" autocomplete="email"></div>
+      <div style="margin-bottom:12px"><input class="inp" type="password" id="s-p" placeholder="Password"></div>
+      <div id="s-err" class="al al-e" style="display:none"></div>
+      <div id="s-ok" class="al al-ok" style="display:none">✅ Account created! Click Login tab to sign in.</div>
+      <button class="btn bp bbl blg" onclick="doSignup()" style="margin-top:6px">Create Account →</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="s-app" class="screen">
+<button class="mob-btn" onclick="el('sidebar').classList.toggle('mob')">☰</button>
+<div class="app">
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sb-logo">
+      <span class="sb-icon">⚡</span>
+      <span class="sb-title" id="sbt">EduPulse</span>
+      <button class="sb-toggle" onclick="toggleSB()">☰</button>
+    </div>
+    <div class="sb-nav">
+      <button class="nb act" data-p="home"         onclick="go('home')">        <span class="ni">🏠</span><span class="nl">Dashboard</span></button>
+      <button class="nb"     data-p="attendance"   onclick="go('attendance')">  <span class="ni">📅</span><span class="nl">Attendance</span></button>
+      <button class="nb"     data-p="syllabus"     onclick="go('syllabus')">    <span class="ni">📚</span><span class="nl">Syllabus</span></button>
+      <button class="nb"     data-p="studytest"    onclick="go('studytest')">   <span class="ni">⏱️</span><span class="nl">Study / Test</span></button>
+      <button class="nb"     data-p="pomodoro"     onclick="go('pomodoro')">    <span class="ni">🍅</span><span class="nl">Pomodoro</span></button>
+      <button class="nb"     data-p="aitest"       onclick="go('aitest')">      <span class="ni">🧠</span><span class="nl">AI Test Zone</span></button>
+      <button class="nb"     data-p="gpa"          onclick="go('gpa')">         <span class="ni">🎓</span><span class="nl">GPA Predictor</span></button>
+      <button class="nb"     data-p="notif"        onclick="go('notif')">       <span class="ni">🔔</span><span class="nl">Notifications</span></button>
+      <button class="nb"     data-p="results"      onclick="go('results')">     <span class="ni">📊</span><span class="nl">Results</span></button>
+      <button class="nb"     data-p="settings"     onclick="go('settings')">    <span class="ni">⚙️</span><span class="nl">Settings</span></button>
+    </div>
+    <div class="sb-bot">
+      <div class="sb-uinfo" id="sb-ui">
+        <div class="sb-uname" id="sb-nm"></div>
+        <div class="sb-uid" id="sb-un"></div>
+      </div>
+      <button class="lout-btn" onclick="doLogout()"><span style="font-size:15px;flex-shrink:0">🚪</span><span class="nl" style="font-size:13.5px;font-weight:600">Logout</span></button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="mc" id="mc">
+    <div class="iw">
+      <div id="pg-home"       class="fi"></div>
+      <div id="pg-attendance" class="fi" style="display:none"></div>
+      <div id="pg-syllabus"   class="fi" style="display:none"></div>
+      <div id="pg-studytest"  class="fi" style="display:none"></div>
+      <div id="pg-pomodoro"   class="fi" style="display:none"></div>
+      <div id="pg-aitest"     class="fi" style="display:none"></div>
+      <div id="pg-gpa"        class="fi" style="display:none"></div>
+      <div id="pg-notif"      class="fi" style="display:none"></div>
+      <div id="pg-results"    class="fi" style="display:none"></div>
+      <div id="pg-settings"   class="fi" style="display:none"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ STAFF MODAL ═══ -->
+<div class="ov" id="m-staff">
+  <div class="ob">
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-size:40px;margin-bottom:8px">👋</div>
+      <h2 style="font-family:'Syne',sans-serif;margin:0 0 6px">One-time Setup</h2>
+      <p style="color:rgba(255,255,255,.45);font-size:13px;margin:0">Enter staff details — used for WhatsApp leave messages.</p>
+    </div>
+    <div style="margin-bottom:12px"><label style="color:rgba(255,255,255,.5);font-size:12px;display:block;margin-bottom:5px">Staff / Professor Name</label><input class="inp" id="st-n" placeholder="e.g. Dr. Ramesh Kumar"></div>
+    <div style="margin-bottom:16px"><label style="color:rgba(255,255,255,.5);font-size:12px;display:block;margin-bottom:5px">WhatsApp Number (with country code)</label><input class="inp" id="st-ph" placeholder="919876543210" oninput="this.value=this.value.replace(/\D/g,'')"></div>
+    <button class="btn bp bbl" style="padding:13px" onclick="saveStaff()">Save & Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ POSTPONE MODAL ═══ -->
+<div class="ov" id="m-post">
+  <div class="ob">
+    <h3 style="font-family:'Syne',sans-serif;margin:0 0 8px">🔄 Postpone Study</h3>
+    <p style="color:rgba(255,255,255,.45);font-size:13px;margin:0 0 16px" id="post-lbl"></p>
+    <div id="post-info" style="margin-bottom:12px"></div>
+    <div id="post-body">
+      <div style="margin-bottom:12px"><label style="color:rgba(255,255,255,.5);font-size:12px;display:block;margin-bottom:5px">Reschedule to:</label><input type="date" class="inp" id="post-dt"></div>
+      <p style="color:rgba(255,255,255,.3);font-size:12px;margin:0 0 16px">⚠️ On new date: complete today's tests first → 10 min gap → catchup unlocks.</p>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn bg" onclick="closeOv('m-post')" style="flex:1">Cancel</button>
+      <button class="btn bamber" onclick="doPostpone()" style="flex:1" id="post-btn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ STUDY OVERLAY ═══ -->
+<div class="sov" id="sov">
+  <div style="width:100%;max-width:560px">
+    <div class="g2" style="padding:20px;margin-bottom:14px;text-align:center">
+      <div style="font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:4px" id="sov-type"></div>
+      <div style="font-size:18px;font-weight:800" id="sov-topic"></div>
+      <div style="color:rgba(255,255,255,.4);font-size:13px;margin-top:4px" id="sov-sub"></div>
+    </div>
+    <div class="g2" style="padding:36px;text-align:center">
+      <div id="sov-study-ph">
+        <p style="color:rgba(255,255,255,.45);font-size:13px;margin:0 0 8px">Study Timer</p>
+        <div id="sov-num" style="font-size:64px;font-weight:800;font-family:monospace;letter-spacing:4px;margin:0 0 8px;color:#fff">00:00</div>
+        <p id="sov-sub2" style="color:rgba(255,255,255,.35);font-size:13px;margin:0 0 28px">Ready to study</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <button class="btn bp blg" id="sov-ss" onclick="studyToggle()">▶️ Start Studying</button>
+          <button class="btn bgreen blg" id="sov-done" onclick="studyDone()" style="display:none">✅ Done → Break</button>
+        </div>
+      </div>
+      <div id="sov-break-ph" style="display:none">
+        <div style="font-size:52px;margin-bottom:12px">☕</div>
+        <p style="color:var(--g);font-size:14px;font-weight:700;margin:0 0 8px">Great work! 5-minute break.</p>
+        <div id="sov-brk" style="font-size:56px;font-weight:800;font-family:monospace;letter-spacing:3px;margin:8px 0;filter:drop-shadow(0 0 12px var(--g));color:#fff">05:00</div>
+        <p style="color:rgba(255,255,255,.4);font-size:13px;margin:0">Test auto-starts at 00:00</p>
+      </div>
+      <div id="sov-load-ph" style="display:none;padding:20px 0">
+        <div class="spin"></div>
+        <p style="color:rgba(255,255,255,.5);margin:0">AI is preparing questions...</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:14px">
+      <button class="btn bg bsm" onclick="cancelStudy()">✕ Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TEST OVERLAY ═══ -->
+<div class="tov" id="tov">
+  <div style="max-width:700px;margin:0 auto">
+    <div class="g2" style="padding:18px;margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <div>
+          <div style="color:rgba(255,255,255,.45);font-size:11px;font-weight:700;letter-spacing:1px" id="tov-type"></div>
+          <div style="font-size:16px;font-weight:700;margin-top:2px" id="tov-topic"></div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:800;color:var(--c)" id="tov-prog">0/10</div>
+          <div style="color:rgba(255,255,255,.35);font-size:12px">Questions</div>
+        </div>
+      </div>
+      <div class="pb" style="margin-top:10px"><div class="pbf" id="tov-pb" style="width:0%"></div></div>
+    </div>
+    <div id="tov-qs"></div>
+    <div id="tov-sub" style="display:none;margin-top:14px">
+      <button class="btn bp bbl blg" onclick="submitTest()">Submit Test →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RESULT OVERLAY ═══ -->
+<div class="tov" id="rov">
+  <div style="max-width:600px;margin:0 auto" id="rov-cnt"></div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
